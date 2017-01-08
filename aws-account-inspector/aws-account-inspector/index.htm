@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <title>Amazon Web Services Account Explorer</title>
@@ -11,8 +11,8 @@
             //bars[0].style.width = "50%";
             var divArray = document.getElementsByClassName("progress-bar");
             w = parseInt(divArray[0].style.width);
-            console.log(w);
-            divArray[0].style.width = (w + 4) + '%';
+            if (w == 69) w = 100;
+            divArray[0].style.width = (w + 1) + '%';
         }
     </script>
     <script src="Scripts/jquery-2.1.4.min.js"></script>
@@ -64,10 +64,10 @@
                             <th class="col-sm-1">EC2</th>
                             <th class="col-sm-1">EBS</th>
                             <th class="col-sm-1">ELB</th>
-                            <th class="col-sm-1">RDS</th>
-                            <th class="col-sm-1">S3</th>
-                            <th class="col-sm-1">DDB</th>
                             <th class="col-sm-1">EIP</th>
+                            <th class="col-sm-1">RDS</th>
+                            <th class="col-sm-1">DDB</th>
+                            <th class="col-sm-1">S3</th>
                         </tr>
                     </thead>
                     <tbody id="details"></tbody>
@@ -99,7 +99,7 @@
             ['Sao Paulo', 'sa-east-1'],
             ['Sydney', 'ap-southeast-2']
         ];
-        var services = ["EC2", "EBS", "ELB", "RDS", "S3", "DDB","EIP"];
+        var services = ["EC2", "EBS", "ELB", "EIP", "RDS", "DDB", "S3"];
         AWS.config.region = 'ap-southeast-2';
         createTable();
     </script>
