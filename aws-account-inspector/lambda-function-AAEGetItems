@@ -2,6 +2,9 @@ from __future__ import print_function
 import json
 import boto3
 from boto3.session import Session
+##
+## Python 2.7, 30 seconds execution. Role needs just basic execution, user's credentials are used to access the account
+##
 def lambda_handler(event, context):
     print("accesskey = " + event['accesskey'])
     print("secretkey = " + event['secretkey'])
@@ -28,7 +31,7 @@ def lambda_handler(event, context):
     elif (service == 'rds'):
         items = client.describe_db_instances()
         for item in items['DBInstances']:
-            count = count + 1
+            count = count + 1 
     elif (service == 's3'):
         items = client.list_buckets()
         for item in items['Buckets']:
