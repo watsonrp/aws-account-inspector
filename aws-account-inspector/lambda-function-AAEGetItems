@@ -1,0 +1,45 @@
+from __future__ import print_function
+import json
+import boto3
+from boto3.session import Session
+def lambda_handler(event, context):
+    print("accesskey = " + event['accesskey'])
+    print("secretkey = " + event['secretkey'])
+    print("region = " + event['region'])
+    print("service = " + event['service'])
+    service = event['service'].lower()
+    session = Session(aws_access_key_id=event['accesskey'], aws_secret_access_key=event['secretkey'], region_name=event['region'])
+    if(service == 'ddb'):
+        client = session.client('dynamodb')
+    else:
+        client = session.client(service)
+    count = 0
+    active = 0
+    _data = {}
+    _data['region'] = event['region']
+    _data['extra'] = ''
+    if (service == 'elb'):
+        items = client.describe_load_balancers()
+        for item in items['LoadBalancerDescriptions']:
+            if(len(item['Instances']) > 0):
+                active = active + 1
+            count = count + 1
+        _data['extra'] = ' (<span style="color:green">'+str(active)+'</span>)'
+    elif (service == 'rds'):
+        items = client.describe_db_instances()
+        for item in items['DBInstances']:
+            count = count + 1
+    elif (service == 's3'):
+        items = client.list_buckets()
+        for item in items['Buckets']:
+            location = client.get_bucket_location( Bucket=item['Name'])
+            if(location['LocationConstraint'] == event['region']):
+                count = count + 1
+    elif (service == 'ddb'):
+        items = client.list_tables()
+        print(items)
+        for item in items['TableNames']:
+            count = count + 1
+    _data['count'] = count
+    json_data = json.dumps(_data)
+    return json_data
