@@ -16,4 +16,4 @@ A simple example of using Cognito, Lambda, and S3 to create a serverless applica
 - Extend this and allow the use of roles.
 
 ### Why did I do this?
-To learn about the AWS Javascript SDK.  Using services such as Lambda and Cognito really helped simplify the app.  One significant challenge was dealing with the async nature of Javascript and as each region is iterated I had to use promises to ensure the post processing was correctly handled. 
+To learn about the AWS Javascript SDK.  Using services such as Lambda and Cognito really helped simplify the app.  One significant challenge was dealing with the async nature of Javascript and as each region is iterated I had to use request callbacks (AWS.Request) to ensure the post processing was correctly handled. 
